@@ -1,0 +1,4 @@
+How to Migrations:
+dotnet ef migrations add InitialCreate --project /home/friday/Inventory/Inventory.API.Data --startup-project .
+How to Update Database:
+dotnet ef database update --project /home/friday/Inventory/Inventory.API.Data --startup-project .

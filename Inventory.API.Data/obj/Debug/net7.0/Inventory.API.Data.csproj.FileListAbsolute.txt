@@ -1,0 +1,14 @@
+/home/friday/Inventory/Inventory.API.Data/bin/Debug/net7.0/Inventory.API.Data.deps.json
+/home/friday/Inventory/Inventory.API.Data/bin/Debug/net7.0/Inventory.API.Data.runtimeconfig.json
+/home/friday/Inventory/Inventory.API.Data/bin/Debug/net7.0/Inventory.API.Data.dll
+/home/friday/Inventory/Inventory.API.Data/bin/Debug/net7.0/Inventory.API.Data.pdb
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.csproj.AssemblyReference.cache
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.GeneratedMSBuildEditorConfig.editorconfig
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.AssemblyInfoInputs.cache
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.AssemblyInfo.cs
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.csproj.CoreCompileInputs.cache
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.dll
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/refint/Inventory.API.Data.dll
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.pdb
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/Inventory.API.Data.genruntimeconfig.cache
+/home/friday/Inventory/Inventory.API.Data/obj/Debug/net7.0/ref/Inventory.API.Data.dll
