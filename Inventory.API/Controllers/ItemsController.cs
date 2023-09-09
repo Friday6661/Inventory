@@ -17,11 +17,11 @@ namespace Inventory.API.Controllers
 
         // Get: api/Items
         [HttpGet]
-        public async Task<IActionResult> RetriveAllCountries()
+        public async Task<IActionResult> RetriveAllItems()
         {
             try
             {
-                var items = await _context.Items.ToListAsync();
+                var items = await _context.Items.Where(i => i.IsDeleted != true).ToListAsync();
 
                 if (items == null || items.Count == 0) return NotFound();
                 return Ok(items);
