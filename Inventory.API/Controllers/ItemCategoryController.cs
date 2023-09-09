@@ -1,8 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Inventory.API.Data;
+using Inventory.API.Services.Contracts;
+using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models.ItemCategory;
+using Inventory.API.Services.Models.ItemCategoryDTO;
+using Inventory.API.Services.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,23 +14,34 @@ namespace Inventory.API.Controllers
     [Route("api/[controller]")]
     public class ItemCategoryController : ControllerBase
     {
-        private readonly InventoryDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IItemCategoriesRepository _itemCategoriesRepository;
 
-        public ItemCategoryController(InventoryDbContext context)
+        public ItemCategoryController(IMapper mapper, IItemCategoriesRepository itemCategoriesRepository)
         {
-            _context = context;
+            _mapper = mapper;
+            _itemCategoriesRepository = itemCategoriesRepository;
         }
 
         // GET: api/itemCategory
         [HttpGet]
-        public async Task<IActionResult> RetriveAllItemCategories()
+        public async Task<IActionResult> RetriveAllItemCategories(bool isDeleted)
         {
             try
             {
-                var itemCategories = await _context.ItemCategories.ToListAsync();
+                var itemCategories = await _itemCategoriesRepository.GetAllAsync();
 
-                if (itemCategories == null || itemCategories.Count == 0) return NotFound();
-                return Ok(itemCategories);
+                if (isDeleted)
+                {
+                    itemCategories = itemCategories.Where(ic => ic.IsDeleted).ToList();
+                }
+                else
+                {
+                    itemCategories = itemCategories.Where(ic => !ic.IsDeleted).ToList();
+                }
+                
+                var records = _mapper.Map<List<GetItemCategoryDTO>>(itemCategories);
+                return Ok(records);
             }
             catch (Exception ex)
             {
@@ -42,10 +55,14 @@ namespace Inventory.API.Controllers
         {
             try
             {
-                var itemCategory = await _context.ItemCategories.FindAsync(id);
-
-                if (itemCategory == null) return NotFound();
-                return Ok(itemCategory);
+                var itemCategory = await _itemCategoriesRepository.GetDetails(id);
+                
+                if (itemCategory == null)
+                {
+                    return NotFound();
+                }
+                var itemCategoryDTO = _mapper.Map<ItemCategoryDTO>(itemCategory);
+                return Ok(itemCategoryDTO);
             }
             catch (Exception ex)
             {
@@ -55,19 +72,29 @@ namespace Inventory.API.Controllers
 
         // PUT: api/item/5
         [HttpPut("id")]
-        public async Task<IActionResult> EditItemCategory(int id, ItemCategory itemCategory)
+        public async Task<IActionResult> EditItemCategory(int id, UpdateItemCategoryDTO updateItemCategoryDTO)
         {
-            if (id != itemCategory.Id) return BadRequest("Invalid Record id");
+            if (id != updateItemCategoryDTO.Id)
+            {
+                return BadRequest("Invalid Record Id");
+            }
 
+            var itemCategory = await _itemCategoriesRepository.GetAsync(id);
+            if (itemCategory == null)
+            {
+                throw new NotFoundException(nameof(EditItemCategory), id);
+            }
+
+            _mapper.Map(updateItemCategoryDTO, itemCategory);
             try
             {
-                await _context.SaveChangesAsync();
+                await _itemCategoriesRepository.UpdateAsync(itemCategory);
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!await ItemCategoryExists(id))
                 {
-                    return Conflict("Item Category has been modified by another user");
+                    throw new NotFoundException(nameof(ItemCategoryExists), id);
                 }
                 else
                 {
@@ -77,9 +104,31 @@ namespace Inventory.API.Controllers
             return NoContent();
         }
 
+        // POST: api/ItemCategory
+        [HttpPost]
+        public async Task<IActionResult> CreateItemCategory(CreateItemCategoryDTO createItemDTO)
+        {
+            var itemCategory = _mapper.Map<ItemCategory>(createItemDTO);
+            await _itemCategoriesRepository.AddAsync(itemCategory);
+            return CreatedAtAction("DetailItemCategory", new {id = itemCategory.Id }, itemCategory);
+        }
+
+        // DELETE: api/itemcategories/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> DeleteItemCategory(int id)
+        {
+            var itemCategory = await _itemCategoriesRepository.GetAsync(id);
+            if (itemCategory == null)
+            {
+                throw new NotFoundException(nameof(DeleteItemCategory), id);
+            }
+            await _itemCategoriesRepository.SoftDeleteAsync(id);
+            return NoContent();
+        }
+
         private async Task<bool> ItemCategoryExists(int id)
         {
-            return await _context.ItemCategories.AnyAsync(e => e.Id == id);
+            return await _itemCategoriesRepository.Exists(id);
         }
     }
 }

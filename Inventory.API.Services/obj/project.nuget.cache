@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "HNXbVt1vHIVrd+cQR1ks174LkMPkcYit5patUilF1Kds/+7dpD2+mDoyBxz65iFrwBuSIYRWqZnoOTdHis+SXQ==",
+  "dgSpecHash": "Qwmoe04c9U6Dc+0plM1+8zuHo6mPGozxIN/Eh7IUpZ9Iv6BnB0XkKXLYDsIGxlMEMBO5Dr2WsugvkRtp8UvJTw==",
   "success": true,
   "projectFilePath": "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj",
   "expectedPackageFiles": [
+    "/home/friday/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/friday/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/friday/.nuget/packages/microsoft.data.sqlite.core/7.0.10/microsoft.data.sqlite.core.7.0.10.nupkg.sha512",
     "/home/friday/.nuget/packages/microsoft.entityframeworkcore/7.0.10/microsoft.entityframeworkcore.7.0.10.nupkg.sha512",
     "/home/friday/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.10/microsoft.entityframeworkcore.abstractions.7.0.10.nupkg.sha512",

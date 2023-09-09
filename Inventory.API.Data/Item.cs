@@ -13,7 +13,8 @@ namespace Inventory.API.Data
         public bool IsDeleted { get; set; } = false;
         public ItemType ItemType { get; set; }
 
-        [ForeignKey(nameof(ItemCategory))]
+
+        [ForeignKey(nameof(ItemCategoryId))]
         public int ItemCategoryId { get; set; }
         public ItemCategory ItemCategory { get; set; }
     }
