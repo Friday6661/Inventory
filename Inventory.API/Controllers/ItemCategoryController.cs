@@ -106,9 +106,9 @@ namespace Inventory.API.Controllers
 
         // POST: api/ItemCategory
         [HttpPost]
-        public async Task<IActionResult> CreateItemCategory(CreateItemCategoryDTO createItemDTO)
+        public async Task<IActionResult> CreateItemCategory(CreateItemCategoryDTO createItemCategoryDTO)
         {
-            var itemCategory = _mapper.Map<ItemCategory>(createItemDTO);
+            var itemCategory = _mapper.Map<ItemCategory>(createItemCategoryDTO);
             await _itemCategoriesRepository.AddAsync(itemCategory);
             return CreatedAtAction("DetailItemCategory", new {id = itemCategory.Id }, itemCategory);
         }

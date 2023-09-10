@@ -1,119 +1,140 @@
-// using Inventory.API.Data;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Inventory.API.Data;
+using Inventory.API.Services.Contracts;
+using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models.Item;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-// namespace Inventory.API.Controllers
-// {
-//     [ApiController]
-//     [Route("api/[controller]")]
-//     public class ItemsController : ControllerBase
-//     {
-//         private readonly InventoryDbContext _context;
+namespace Inventory.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ItemsController : ControllerBase
+    {
+        private readonly IMapper _mapper;
+        private readonly IItemRepository _itemRepository;
 
-//         public ItemsController(InventoryDbContext context)
-//         {
-//             _context = context;
-//         }
+        public ItemsController(IMapper mapper, IItemRepository itemRepository)
+        {
+            _mapper = mapper;
+            _itemRepository = itemRepository;
+        }
 
-//         // Get: api/Items
-//         [HttpGet]
-//         public async Task<IActionResult> RetriveAllItems()
-//         {
-//             try
-//             {
-//                 var items = await _context.Items.Where(i => i.IsDeleted != true).ToListAsync();
+        // Get: api/Items
+        [HttpGet]
+        public async Task<IActionResult> RetriveAllItems(bool isDeleted)
+        {
+            try
+            {
+                var items = await _itemRepository.GetAllAsync();
+                if (isDeleted)
+                {
+                    items = items.Where(i => i.IsDeleted == true).ToList();
+                }
+                else
+                {
+                    items = items.Where(i => i.IsDeleted == false).ToList();
+                }
 
-//                 if (items == null || items.Count == 0) return NotFound();
-//                 return Ok(items);
-//             }
-//             catch (Exception ex)
-//             {
-//                 return StatusCode(500, $"Errors: {ex.Message}");
-//             }
-//         }
+                var records = _mapper.Map<List<GetItemDTO>>(items);
+                return Ok(records);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Errors: {ex.Message}");
+            }
+        }
 
-//         // Get: api/Item/5
-//         [HttpGet("{id}")]
-//         public async Task<IActionResult> DetailItem(int id)
-//         {
-//             try
-//             {
-//                 var item = await _context.Items.FindAsync(id);
+        // Get: api/Item/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> DetailItem(int id)
+        {
+            try
+            {
+                var item = await _itemRepository.GetDetails(id);
+                if (item == null)
+                {
+                    throw new NotFoundException(nameof(DetailItem), id);
+                }
                 
-//                 if (item == null) return NotFound();
-//                 return Ok(item);
-//             }
-//             catch (Exception ex)
-//             {
-//                 return StatusCode(500, $"Errors: {ex.Message}");
-//             }
-//         }
+                var itemDTO = _mapper.Map<ItemDTO>(item);
+                return Ok(itemDTO);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Errors: {ex.Message}");
+            }
+        }
 
-//         // PUT: api/Item/5
-//         [HttpPut("{id}")]
-//         public async Task<IActionResult> EditItem(int id, Item item)
-//         {
-//             if (id != item.Id)
-//             {
-//                 return BadRequest("Invalid Record Id");
-//             }
-//             _context.Entry(item).State = EntityState.Modified;
+        // PUT: api/Item/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditItem(int id, UpdateItemDTO updateItemDTO)
+        {
+            if (id != updateItemDTO.Id)
+            {
+                return BadRequest("Invalid Record Id");
+            }
+            
+            var item = await _itemRepository.GetAsync(id);
+            if (item == null)
+            {
+                throw new NotFoundException(nameof(EditItem), id);
+            }
 
-//             try
-//             {
-//                 await _context.SaveChangesAsync();
-//             }
-//             catch (DbUpdateConcurrencyException)
-//             {
-//                 if (!ItemExists(id))
-//                 {
-//                     return Conflict("Item has been modified by another user. Please refresh and try again.");
-//                 }
-//                 else
-//                 {
-//                     throw;
-//                 }
-//             }
-//             return NoContent();
-//         }
+            _mapper.Map(updateItemDTO, item);
+            try
+            {
+                await _itemRepository.UpdateAsync(item);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await ItemExists(id))
+                {
+                    throw new NotFoundException(nameof(ItemExists), id);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
 
-//         // POST: api/Items
-//         [HttpPost]
-//         public async Task<IActionResult> CreateItem(Item item)
-//         {
-//             _context.Items.Add(item);
-//             await _context.SaveChangesAsync();
+        // POST: api/Item
+        [HttpPost]
+        public async Task<IActionResult> CreateItem(CreateItemDTO createItemDTO)
+        {
+            var item = _mapper.Map<Item>(createItemDTO);
+            await _itemRepository.AddAsync(item);
+            return CreatedAtAction(nameof(DetailItem), new {id = item.Id}, item);
+        }
 
-//             return CreatedAtAction("DetailItem", new { id = item.Id }, item);
-//         }
+        // DELETE: api/Item/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            try
+            {
+                var item = await _itemRepository.GetAsync(id);
 
-//         [HttpPatch]
-//         public async Task<IActionResult> SoftDeleteItem(int id, [FromBody] SoftDeleteRequest softDeleteRequest)
-//         {
-//             try
-//             {
-//                 var item = await _context.Items.FindAsync(id);
-
-//                 if (item == null) return NotFound();
-//                 item.IsDeleted = softDeleteRequest.IsDeleted;
-//                 await _context.SaveChangesAsync();
-//                 return NoContent();
-//             }
-//             catch (System.Exception)
-//             {
+                if (item == null)
+                {/////
+                    throw new NotFoundException(nameof(DeleteItem), id);
+                }
+                await _itemRepository.SoftDeleteAsync(id);
+                return NoContent();
+            }
+            catch (System.Exception)
+            {
                 
-//                 throw;
-//             }
-//         }
+                throw;
+            }
+        }
 
-//         private bool ItemExists(int id)
-//         {
-//             return _context.Items.Any(e => e.Id == id);
-//         }
-//     }
-
-//     public class SoftDeleteRequest
-//     {
-//         public bool IsDeleted { get; set; }
-//     }
-// }
+        private async Task<bool> ItemExists(int id)
+        {
+            return await _itemRepository.Exists(id);
+        }
+    }
+}
