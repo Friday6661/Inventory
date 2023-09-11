@@ -15,7 +15,10 @@ namespace Inventory.API.Services.Repository
 
         public async Task<Item> GetDetails(int id)
         {
-            var item = await _context.Items.Include(i => i.ItemCategory).FirstOrDefaultAsync(i => i.Id == id);
+            var item = await _context.Items.Include(i => i.ItemCategory)
+                                            .Include(i => i.Supplier)
+                                            .Include(i => i.Warehouse)
+                                            .FirstOrDefaultAsync(i => i.Id == id);
             if (item == null)
             {
                 throw new NotFoundException(nameof(GetDetails), id);

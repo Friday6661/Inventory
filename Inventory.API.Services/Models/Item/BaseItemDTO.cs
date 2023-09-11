@@ -17,5 +17,6 @@ namespace Inventory.API.Services.Models.Item
         [Required(ErrorMessage = "ItemCategoryId is Required")]
         public int ItemCategoryId { get; set; }
         public int WarehouseId { get; set; }
+        public int SupplierId { get; set; }
     }
 }

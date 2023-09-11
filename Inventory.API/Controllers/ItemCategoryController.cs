@@ -3,8 +3,6 @@ using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
 using Inventory.API.Services.Models.ItemCategory;
-using Inventory.API.Services.Models.ItemCategoryDTO;
-using Inventory.API.Services.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

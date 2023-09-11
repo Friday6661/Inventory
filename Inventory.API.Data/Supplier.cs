@@ -11,11 +11,12 @@ namespace Inventory.API.Data
         
         [Required]
         [DataType(DataType.PhoneNumber)]
-        public long Telephone { get; set; }
+        public string Telephone { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         public virtual ICollection<Item> Items { get; set; }
     }

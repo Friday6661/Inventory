@@ -72,7 +72,7 @@ namespace Inventory.API.Data
                     Name = "Supplier-01",
                     Address = "Danger Line 001",
                     Description = "Seed Data",
-                    Telephone = 08981216969,
+                    Telephone = "08981216969",
                     Email = "supplier01@gmail.com",
                 }
             );

@@ -2,6 +2,7 @@
 using Inventory.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.API.Data.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230911090129_IsDeletedInSupplierEntity")]
+    partial class IsDeletedInSupplierEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -141,9 +144,8 @@ namespace Inventory.API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Telephone")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -158,7 +160,7 @@ namespace Inventory.API.Data.Migrations
                             Email = "supplier01@gmail.com",
                             IsDeleted = false,
                             Name = "Supplier-01",
-                            Telephone = "08981216969"
+                            Telephone = 8981216969L
                         });
                 });
 
