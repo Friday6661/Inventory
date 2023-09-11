@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.API.Data.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20230908140150_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230911005020_SupplierEntity")]
+    partial class SupplierEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,12 +40,22 @@ namespace Inventory.API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("TotalStocks")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ItemCategoryId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("Items");
 
@@ -58,7 +68,9 @@ namespace Inventory.API.Data.Migrations
                             ItemCategoryId = 1,
                             ItemType = 2,
                             Name = "Monitor United-Star",
-                            TotalStocks = 25
+                            SupplierId = 1,
+                            TotalStocks = 25,
+                            WarehouseId = 1
                         },
                         new
                         {
@@ -68,7 +80,9 @@ namespace Inventory.API.Data.Migrations
                             ItemCategoryId = 2,
                             ItemType = 2,
                             Name = "Laptop Thinkpad",
-                            TotalStocks = 20
+                            SupplierId = 1,
+                            TotalStocks = 20,
+                            WarehouseId = 1
                         });
                 });
 
@@ -108,6 +122,81 @@ namespace Inventory.API.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Inventory.API.Data.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Telephone")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Danger Line 001",
+                            Description = "Seed Data",
+                            Email = "supplier01@gmail.com",
+                            Name = "Supplier-01",
+                            Telephone = 8981216969L
+                        });
+                });
+
+            modelBuilder.Entity("Inventory.API.Data.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TotalCapacity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsedCapacity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Danger Line 001",
+                            IsDeleted = false,
+                            Name = "Warehouse-01",
+                            TotalCapacity = 5000,
+                            UsedCapacity = 45
+                        });
+                });
+
             modelBuilder.Entity("Inventory.API.Data.Item", b =>
                 {
                     b.HasOne("Inventory.API.Data.ItemCategory", "ItemCategory")
@@ -116,10 +205,36 @@ namespace Inventory.API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Inventory.API.Data.Supplier", "Supplier")
+                        .WithMany("Items")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.API.Data.Warehouse", "Warehouse")
+                        .WithMany("Items")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ItemCategory");
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Inventory.API.Data.ItemCategory", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Inventory.API.Data.Supplier", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Inventory.API.Data.Warehouse", b =>
                 {
                     b.Navigation("Items");
                 });

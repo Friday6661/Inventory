@@ -17,5 +17,13 @@ namespace Inventory.API.Data
         [ForeignKey(nameof(ItemCategoryId))]
         public int ItemCategoryId { get; set; }
         public ItemCategory ItemCategory { get; set; }
+
+        [ForeignKey(nameof(WarehouseId))]
+        public int WarehouseId { get; set; }
+        public Warehouse Warehouse { get; set; }
+
+        [ForeignKey(nameof(SupplierId))]
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace Inventory.API.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemCategory> ItemCategories { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +39,9 @@ namespace Inventory.API.Data
                     Description = "Monitor LED 20 Inch",
                     TotalStocks = 25,
                     ItemType = Enum.ItemType.Borrowable,
-                    ItemCategoryId = 1
+                    ItemCategoryId = 1,
+                    WarehouseId = 1,
+                    SupplierId = 1
                 },
                 new Item
                 {
@@ -46,7 +50,30 @@ namespace Inventory.API.Data
                     Description = "Laptop Work Station tipe W-540",
                     TotalStocks = 20,
                     ItemType = Enum.ItemType.Borrowable,
-                    ItemCategoryId = 2
+                    ItemCategoryId = 2,
+                    WarehouseId = 1,
+                    SupplierId = 1,
+                }
+            );
+            modelBuilder.Entity<Warehouse>().HasData(
+                new Warehouse
+                {
+                    Id = 1,
+                    Name = "Warehouse-01",
+                    Address = "Danger Line 001",
+                    UsedCapacity = 45,
+                    TotalCapacity = 5000,
+                }
+            );
+            modelBuilder.Entity<Supplier>().HasData(
+                new Supplier
+                {
+                    Id = 1,
+                    Name = "Supplier-01",
+                    Address = "Danger Line 001",
+                    Description = "Seed Data",
+                    Telephone = 08981216969,
+                    Email = "supplier01@gmail.com",
                 }
             );
         }

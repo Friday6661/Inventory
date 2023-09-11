@@ -2,6 +2,7 @@
 using Inventory.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.API.Data.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230911001905_InitialCreated")]
+    partial class InitialCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -37,9 +40,6 @@ namespace Inventory.API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TotalStocks")
                         .HasColumnType("INTEGER");
 
@@ -49,8 +49,6 @@ namespace Inventory.API.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ItemCategoryId");
-
-                    b.HasIndex("SupplierId");
 
                     b.HasIndex("WarehouseId");
 
@@ -65,7 +63,6 @@ namespace Inventory.API.Data.Migrations
                             ItemCategoryId = 1,
                             ItemType = 2,
                             Name = "Monitor United-Star",
-                            SupplierId = 1,
                             TotalStocks = 25,
                             WarehouseId = 1
                         },
@@ -77,7 +74,6 @@ namespace Inventory.API.Data.Migrations
                             ItemCategoryId = 2,
                             ItemType = 2,
                             Name = "Laptop Thinkpad",
-                            SupplierId = 1,
                             TotalStocks = 20,
                             WarehouseId = 1
                         });
@@ -116,44 +112,6 @@ namespace Inventory.API.Data.Migrations
                             Description = "Ini adalah item yang memiliki Category Laptop",
                             IsDeleted = false,
                             Name = "Laptop"
-                        });
-                });
-
-            modelBuilder.Entity("Inventory.API.Data.Supplier", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("Telephone")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Suppliers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Danger Line 001",
-                            Description = "Seed Data",
-                            Email = "supplier01@gmail.com",
-                            Name = "Supplier-01",
-                            Telephone = 8981216969L
                         });
                 });
 
@@ -202,12 +160,6 @@ namespace Inventory.API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Inventory.API.Data.Supplier", "Supplier")
-                        .WithMany("Items")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Inventory.API.Data.Warehouse", "Warehouse")
                         .WithMany("Items")
                         .HasForeignKey("WarehouseId")
@@ -216,17 +168,10 @@ namespace Inventory.API.Data.Migrations
 
                     b.Navigation("ItemCategory");
 
-                    b.Navigation("Supplier");
-
                     b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Inventory.API.Data.ItemCategory", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Inventory.API.Data.Supplier", b =>
                 {
                     b.Navigation("Items");
                 });
