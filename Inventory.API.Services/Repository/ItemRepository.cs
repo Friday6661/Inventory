@@ -37,5 +37,44 @@ namespace Inventory.API.Services.Repository
             await _context.SaveChangesAsync();
             
         }
+
+        public async Task<Item> AddItemAndUpdateWarehouse(Item item)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var warehouse = await _context.Warehouses.FirstOrDefaultAsync(w => w.Id == item.WarehouseId);
+
+                    if (warehouse != null)
+                    {
+                        int totalStocks = item.TotalStocks;
+                        if (warehouse.UsedCapacity + totalStocks > warehouse.TotalCapacity)
+                        {
+                            transaction.Rollback();
+                            throw new Exception("Used capacity exceeds maximum capacity.");
+                        }
+
+                        warehouse.UsedCapacity += totalStocks;
+                        await _context.SaveChangesAsync();
+
+                        await _context.AddAsync(item);
+                        await _context.SaveChangesAsync();
+
+                        transaction.Commit();
+                    }
+                    else
+                    {
+                        throw new NotFoundException(nameof(AddItemAndUpdateWarehouse), item);
+                    }
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                return item;
+            }
+        }
     }
 }

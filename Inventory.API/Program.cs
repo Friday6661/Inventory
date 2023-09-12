@@ -34,6 +34,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IItemCategoriesRepository, ItemCategoryRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 
 var app = builder.Build();
 

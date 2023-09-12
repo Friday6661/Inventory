@@ -106,7 +106,7 @@ namespace Inventory.API.Controllers
         public async Task<IActionResult> CreateItem(CreateItemDTO createItemDTO)
         {
             var item = _mapper.Map<Item>(createItemDTO);
-            await _itemRepository.AddAsync(item);
+            await _itemRepository.AddItemAndUpdateWarehouse(item);
             return CreatedAtAction(nameof(DetailItem), new {id = item.Id}, item);
         }
 
