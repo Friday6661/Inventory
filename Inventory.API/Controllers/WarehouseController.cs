@@ -62,7 +62,6 @@ namespace Inventory.API.Controllers
                 {
                     throw new NotFoundException(nameof(DetailWarehouse), id);
                 }
-
                 var warehouseDTO = _mapper.Map<WarehouseDTO>(warehouse);
                 return Ok(warehouseDTO);
 

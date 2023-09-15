@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
@@ -37,6 +33,24 @@ namespace Inventory.API.Services.Repository
             }
             warehouse.IsDeleted = true;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUsedCapacityWarehouses()
+        {
+            try
+            {
+                var warehouses = await GetAllAsync();
+                foreach (var warehouse in warehouses)
+                {
+                    int totalStocksInWarehouse = warehouse.Items.Sum(item => item.TotalStocks);
+                    warehouse.UsedCapacity = totalStocksInWarehouse;
+                }
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

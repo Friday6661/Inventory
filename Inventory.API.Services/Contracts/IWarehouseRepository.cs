@@ -6,5 +6,6 @@ namespace Inventory.API.Services.Contracts
     {
         Task<Warehouse> GetDetails(int id);
         Task SoftDelete(int id);
+        Task UpdateUsedCapacityWarehouses();
     }
 }

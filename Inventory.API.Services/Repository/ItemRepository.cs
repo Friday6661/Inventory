@@ -56,7 +56,6 @@ namespace Inventory.API.Services.Repository
                         }
 
                         warehouse.UsedCapacity += totalStocks;
-                        await _context.SaveChangesAsync();
 
                         await _context.AddAsync(item);
                         await _context.SaveChangesAsync();
@@ -75,6 +74,53 @@ namespace Inventory.API.Services.Repository
                 }
                 return item;
             }
+        }
+
+        public async Task<Item> SoftDeleteAndUpdateWarehouse(Item item)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await SoftDeleteAsync(item.Id);
+                    // await _context.SaveChangesAsync();
+
+                    var warehouse = await _context.Warehouses.FirstOrDefaultAsync(w => w.Id == item.WarehouseId);
+                    if (warehouse == null)
+                    {
+                        throw new NotFoundException(nameof(SoftDeleteAndUpdateWarehouse), item);
+                    }
+                    warehouse.UsedCapacity -= item.TotalStocks;
+                    await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                return item;
+            }
+        }
+
+        public async Task<bool> UpdateItem(Item item)
+        {
+            _context.Update(item);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task EditItemAsync(Item item)
+        {
+            await UpdateAsync(item);
+            var warehouses = await _context.Warehouses.Include(w => w.Items).ToListAsync();
+            foreach (var warehouse in warehouses)
+            {
+                int totalStocksInWarehouse = warehouse.Items.Where(i => i.IsDeleted == false).Sum(i => i.TotalStocks);
+                warehouse.UsedCapacity = totalStocksInWarehouse;
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -3,6 +3,7 @@ using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
 using Inventory.API.Services.Models.Item;
+using Inventory.API.Services.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,7 +86,7 @@ namespace Inventory.API.Controllers
             _mapper.Map(updateItemDTO, item);
             try
             {
-                await _itemRepository.UpdateAsync(item);
+                await _itemRepository.EditItemAsync(item);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -122,7 +123,7 @@ namespace Inventory.API.Controllers
                 {/////
                     throw new NotFoundException(nameof(DeleteItem), id);
                 }
-                await _itemRepository.SoftDeleteAsync(id);
+                await _itemRepository.SoftDeleteAndUpdateWarehouse(item);
                 return NoContent();
             }
             catch (System.Exception)
