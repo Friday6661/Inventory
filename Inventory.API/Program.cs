@@ -2,6 +2,7 @@ using Inventory.API.Data;
 using Inventory.API.Services.Configurations;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -14,6 +15,10 @@ var connectionString = builder.Configuration.GetConnectionString("InventoryDbCon
 builder.Services.AddDbContext<InventoryDbContext>(options => {
     options.UseSqlite(connectionString, b => b.MigrationsAssembly("Inventory.API.Data"));
 });
+
+builder.Services.AddIdentityCore<ApiUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<InventoryDbContext>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

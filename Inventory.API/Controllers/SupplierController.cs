@@ -111,7 +111,7 @@ namespace Inventory.API.Controllers
         }
 
         // DELETE: api/suppliers/5
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> DeleteSupplier(int id)
         {
             var supplier = _supplierRepository.GetAsync(id);

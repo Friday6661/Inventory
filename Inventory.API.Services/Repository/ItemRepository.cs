@@ -113,14 +113,26 @@ namespace Inventory.API.Services.Repository
 
         public async Task EditItemAsync(Item item)
         {
-            await UpdateAsync(item);
-            var warehouses = await _context.Warehouses.Include(w => w.Items).ToListAsync();
-            foreach (var warehouse in warehouses)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                int totalStocksInWarehouse = warehouse.Items.Where(i => i.IsDeleted == false).Sum(i => i.TotalStocks);
-                warehouse.UsedCapacity = totalStocksInWarehouse;
+                try
+                {
+                    await UpdateAsync(item);
+                    var warehouses = await _context.Warehouses.Include(w => w.Items).ToListAsync();
+                    foreach (var warehouse in warehouses)
+                    {
+                        int totalStocksInWarehouse = warehouse.Items.Where(i => i.IsDeleted == false).Sum(i => i.TotalStocks);
+                        warehouse.UsedCapacity = totalStocksInWarehouse;
+                    }
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch (System.Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
-            await _context.SaveChangesAsync();
         }
     }
 }

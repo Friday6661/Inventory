@@ -69,7 +69,7 @@ namespace Inventory.API.Controllers
         }
 
         // PUT: api/item/5
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditItemCategory(int id, UpdateItemCategoryDTO updateItemCategoryDTO)
         {
             if (id != updateItemCategoryDTO.Id)

@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.API.Data
 {
-    public class InventoryDbContext : DbContext
+    public class InventoryDbContext : IdentityDbContext<ApiUser>
     {
         public InventoryDbContext(DbContextOptions options) : base(options)
         {
