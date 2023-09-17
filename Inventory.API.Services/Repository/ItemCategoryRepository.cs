@@ -1,16 +1,20 @@
+using AutoMapper;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Inventory.API.Services.Repository
 {
     public class ItemCategoryRepository : GenericRepository<ItemCategory>, IItemCategoriesRepository
     {
         private readonly InventoryDbContext _context;
-        public ItemCategoryRepository(InventoryDbContext context) : base(context)
+        private readonly IMapper _mapper;
+        public ItemCategoryRepository(InventoryDbContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ItemCategory> GetDetails(int id)

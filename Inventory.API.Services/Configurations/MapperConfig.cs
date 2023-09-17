@@ -3,6 +3,7 @@ using Inventory.API.Data;
 using Inventory.API.Services.Models.Item;
 using Inventory.API.Services.Models.ItemCategory;
 using Inventory.API.Services.Models.Supplier;
+using Inventory.API.Services.Models.Users;
 using Inventory.API.Services.Models.Warehouse;
 
 namespace Inventory.API.Services.Configurations
@@ -34,6 +35,9 @@ namespace Inventory.API.Services.Configurations
             CreateMap<Warehouse, GetWarehouseDTO>().ReverseMap();
             CreateMap<Warehouse, UpdateWarehouseDTO>().ReverseMap();
             CreateMap<Warehouse, WarehouseDTO>().ReverseMap();
+
+            // Users
+            CreateMap<ApiUserDTO, ApiUser>().ReverseMap();
         }
     }
 }

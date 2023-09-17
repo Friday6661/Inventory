@@ -2,14 +2,17 @@ using AutoMapper;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models;
 using Inventory.API.Services.Models.Supplier;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0", Deprecated = false)]
     public class SupplierController : ControllerBase
     {
         private readonly ISupplierRepository _supplierRepository;
@@ -22,7 +25,7 @@ namespace Inventory.API.Controllers
         }
 
         // GET: api/supplier
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> RetriveAllSuppliers(bool isDeleted)
         {
             try
@@ -47,6 +50,14 @@ namespace Inventory.API.Controllers
             }
         }
 
+        // GET: api/suppliers/Paging
+        [HttpGet]
+        public async Task<IActionResult> GetPagedSuppliers(QueryParameters queryParameters)
+        {
+            var pagedSuppliersResult = await _supplierRepository.GetAllAsync<GetSupplierDTO>(queryParameters);
+            return Ok(pagedSuppliersResult);
+        }
+
         // GET: api/suppliers/5
         [HttpGet("{id}")]
         public async Task<IActionResult> DetailSupplier(int id)
@@ -69,6 +80,7 @@ namespace Inventory.API.Controllers
 
         // PUT: api/suppliers/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> EditSupplier(int id, UpdateSupplierDTO updateSupplierDTO)
         {
             if (id != updateSupplierDTO.Id)
@@ -103,6 +115,7 @@ namespace Inventory.API.Controllers
 
         // POST: api/suppliers/5
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateSupplier(CreateSupplierDTO createSupplierDTO)
         {
             var supplier = _mapper.Map<Supplier>(createSupplierDTO);
@@ -112,6 +125,7 @@ namespace Inventory.API.Controllers
 
         // DELETE: api/suppliers/5
         [HttpPatch("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteSupplier(int id)
         {
             var supplier = _supplierRepository.GetAsync(id);

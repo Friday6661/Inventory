@@ -1,6 +1,9 @@
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.API.Services.Repository
@@ -8,9 +11,11 @@ namespace Inventory.API.Services.Repository
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly InventoryDbContext _context;
-        public GenericRepository(InventoryDbContext context)
+        private readonly IMapper _mapper;
+        public GenericRepository(InventoryDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<T> AddAsync(T entity)
@@ -36,6 +41,23 @@ namespace Inventory.API.Services.Repository
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<PagedResult<TResult>> GetAllAsync<TResult>(QueryParameters queryParameters)
+        {
+            var totalSize = await _context.Set<T>().CountAsync();
+            var data = await _context.Set<T>()
+                .Skip(queryParameters.StartIndex)
+                .Take(queryParameters.PageSize)
+                .ProjectTo<TResult>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+            return new PagedResult<TResult>
+            {
+                Data = data,
+                PageNumber = queryParameters.PageNumber,
+                RecordNumber = queryParameters.PageSize,
+                TotalCount = totalSize
+            };
         }
 
         public async Task<T> GetAsync(int id)

@@ -282,3 +282,13 @@
 /home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.Extensions.Identity.Core.dll
 /home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.Extensions.Identity.Stores.dll
 /home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.Extensions.Options.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.AspNetCore.Mvc.Versioning.dll
+/home/friday/Inventory/Inventory.API/bin/Debug/net7.0/Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll

@@ -2,15 +2,18 @@ using AutoMapper;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models;
 using Inventory.API.Services.Models.Item;
 using Inventory.API.Services.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0", Deprecated = false)]
     public class ItemsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -23,7 +26,7 @@ namespace Inventory.API.Controllers
         }
 
         // Get: api/Items
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> RetriveAllItems(bool isDeleted)
         {
             try
@@ -45,6 +48,13 @@ namespace Inventory.API.Controllers
             {
                 return StatusCode(500, $"Errors: {ex.Message}");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPagedItem([FromQuery] QueryParameters queryParameters)
+        {
+            var pagedItemsResult = await _itemRepository.GetAllAsync<GetItemDTO>(queryParameters);
+            return Ok(pagedItemsResult);
         }
 
         // Get: api/Item/5
@@ -70,6 +80,7 @@ namespace Inventory.API.Controllers
 
         // PUT: api/Item/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> EditItem(int id, UpdateItemDTO updateItemDTO)
         {
             if (id != updateItemDTO.Id)
@@ -104,6 +115,7 @@ namespace Inventory.API.Controllers
 
         // POST: api/Item
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateItem(CreateItemDTO createItemDTO)
         {
             var item = _mapper.Map<Item>(createItemDTO);
@@ -113,6 +125,7 @@ namespace Inventory.API.Controllers
 
         // DELETE: api/Item/5
         [HttpPatch("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteItem(int id)
         {
             try

@@ -2,14 +2,17 @@ using AutoMapper;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
+using Inventory.API.Services.Models;
 using Inventory.API.Services.Models.ItemCategory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0", Deprecated = false)]
     public class ItemCategoryController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -22,7 +25,7 @@ namespace Inventory.API.Controllers
         }
 
         // GET: api/itemCategory
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> RetriveAllItemCategories(bool isDeleted)
         {
             try
@@ -45,6 +48,14 @@ namespace Inventory.API.Controllers
             {
                 return StatusCode(500, $"Errors: {ex.Message}");
             }
+        }
+
+        // GET: api/ItemCategory/Paging
+        [HttpGet]
+        public async Task<IActionResult> GetPagedItemCategory([FromQuery] QueryParameters queryParameters)
+        {
+            var pagedItemCategoriesResult = await _itemCategoriesRepository.GetAllAsync<GetItemCategoryDTO>(queryParameters);
+            return Ok(pagedItemCategoriesResult);
         }
 
         // GET: api/itemCategory/5
@@ -70,6 +81,7 @@ namespace Inventory.API.Controllers
 
         // PUT: api/item/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> EditItemCategory(int id, UpdateItemCategoryDTO updateItemCategoryDTO)
         {
             if (id != updateItemCategoryDTO.Id)
@@ -104,6 +116,7 @@ namespace Inventory.API.Controllers
 
         // POST: api/ItemCategory
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateItemCategory(CreateItemCategoryDTO createItemCategoryDTO)
         {
             var itemCategory = _mapper.Map<ItemCategory>(createItemCategoryDTO);
@@ -113,6 +126,7 @@ namespace Inventory.API.Controllers
 
         // DELETE: api/itemcategories/5
         [HttpPatch("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteItemCategory(int id)
         {
             var itemCategory = await _itemCategoriesRepository.GetAsync(id);

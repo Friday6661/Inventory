@@ -1,0 +1,13 @@
+using Inventory.API.Services.Models.Users;
+using Microsoft.AspNetCore.Identity;
+
+namespace Inventory.API.Services.Contracts
+{
+    public interface IAuthManager
+    {
+        Task<IEnumerable<IdentityError>> Register(ApiUserDTO userDTO);
+        Task<AuthResponseDTO> Login(LoginDTO loginDTO);
+        Task<string> CreateRefreshToken();
+        Task<AuthResponseDTO> VerifyRefreshToken(AuthResponseDTO request);
+    }
+}

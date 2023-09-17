@@ -1,3 +1,4 @@
+using AutoMapper;
 using Inventory.API.Data;
 using Inventory.API.Services.Contracts;
 using Inventory.API.Services.Exceptions;
@@ -8,9 +9,11 @@ namespace Inventory.API.Services.Repository
     public class ItemRepository : GenericRepository<Item>, IItemRepository
     {
         private readonly InventoryDbContext _context;
-        public ItemRepository(InventoryDbContext context) : base(context)
+        private readonly IMapper _mapper;
+        public ItemRepository(InventoryDbContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<Item> GetDetails(int id)
