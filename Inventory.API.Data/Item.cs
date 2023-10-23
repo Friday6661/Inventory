@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Inventory.API.Data.Enum;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Inventory.API.Data
 {
@@ -12,6 +11,7 @@ namespace Inventory.API.Data
         public int TotalStocks { get; set; }
         public bool IsDeleted { get; set; } = false;
         public ItemType ItemType { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
 
         [ForeignKey(nameof(ItemCategoryId))]

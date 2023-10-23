@@ -3,6 +3,7 @@ using System;
 using Inventory.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.API.Data.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    partial class InventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231020144217_DatetimeCreatedAt")]
+    partial class DatetimeCreatedAt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
@@ -137,7 +140,7 @@ namespace Inventory.API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(1919),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Monitor LED 20 Inch",
                             IsDeleted = false,
                             ItemCategoryId = 1,
@@ -150,7 +153,7 @@ namespace Inventory.API.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(1925),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Laptop Work Station tipe W-540",
                             IsDeleted = false,
                             ItemCategoryId = 2,
@@ -188,7 +191,7 @@ namespace Inventory.API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(1646),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Ini adalah item yang memiliki Category Monitor",
                             IsDeleted = false,
                             Name = "Monitor"
@@ -196,7 +199,7 @@ namespace Inventory.API.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(1685),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Ini adalah item yang memiliki Category Laptop",
                             IsDeleted = false,
                             Name = "Laptop"
@@ -241,106 +244,12 @@ namespace Inventory.API.Data.Migrations
                         {
                             Id = 1,
                             Address = "Danger Line 001",
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(2354),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Seed Data",
                             Email = "supplier01@gmail.com",
                             IsDeleted = false,
                             Name = "Supplier-01",
                             Telephone = "08981216969"
-                        });
-                });
-
-            modelBuilder.Entity("Inventory.API.Data.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TransactionStatusId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("TransactionStatusId");
-
-                    b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("Inventory.API.Data.TransactionStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Transactions need to be approved by admin",
-                            Name = "Pending Approval"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Transactions have been approved",
-                            Name = "Approved"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Transactions have been rejected",
-                            Name = "Rejected"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Transactions have been cancelled",
-                            Name = "Cancelled"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Item is currently on loan to a user",
-                            Name = "Out on Loan"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Transactions have been returned",
-                            Name = "Returned"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Transactions have been returned with issue",
-                            Name = "Returned With Issue"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Item has been consumed",
-                            Name = "Consumed"
                         });
                 });
 
@@ -377,7 +286,7 @@ namespace Inventory.API.Data.Migrations
                         {
                             Id = 1,
                             Address = "Danger Line 001",
-                            CreatedAt = new DateTime(2023, 10, 21, 21, 12, 39, 326, DateTimeKind.Local).AddTicks(2145),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Warehouse-01",
                             TotalCapacity = 5000,
@@ -413,13 +322,13 @@ namespace Inventory.API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a2840f4a-ecbb-4747-a4b8-d1d34ac44dc6",
+                            Id = "b365971e-2a66-4828-8eb6-71f91b803013",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "e2fa5204-fd76-4628-9339-c313a8097b5a",
+                            Id = "45db8794-0c34-4039-a6da-d4df879fdaa4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -552,25 +461,6 @@ namespace Inventory.API.Data.Migrations
                     b.Navigation("Supplier");
 
                     b.Navigation("Warehouse");
-                });
-
-            modelBuilder.Entity("Inventory.API.Data.Transaction", b =>
-                {
-                    b.HasOne("Inventory.API.Data.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.API.Data.TransactionStatus", "TransactionStatus")
-                        .WithMany()
-                        .HasForeignKey("TransactionStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("TransactionStatus");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

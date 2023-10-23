@@ -15,6 +15,8 @@ namespace Inventory.API.Data
         public DbSet<ItemCategory> ItemCategories { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<TransactionStatus> TransactionStatuses { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,7 @@ namespace Inventory.API.Data
             modelBuilder.ApplyConfiguration(new ItemConfiguration());
             modelBuilder.ApplyConfiguration(new WarehouseConfiguration());
             modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionStatusConfiguration());
         }
     }
 }
