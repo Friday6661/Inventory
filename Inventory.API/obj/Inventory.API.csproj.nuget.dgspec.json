@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/friday/Inventory/Inventory.API/Inventory.API.csproj": {}
+    "/home/friday6661/Inventory/Inventory.API/Inventory.API.csproj": {}
   },
   "projects": {
-    "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
+    "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj",
+        "projectUniqueName": "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj",
         "projectName": "Inventory.API.Data",
-        "projectPath": "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj",
-        "packagesPath": "/home/friday/.nuget/packages/",
-        "outputPath": "/home/friday/Inventory/Inventory.API.Data/obj/",
+        "projectPath": "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj",
+        "packagesPath": "/home/friday6661/.nuget/packages/",
+        "outputPath": "/home/friday6661/Inventory/Inventory.API.Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/friday/.nuget/NuGet/NuGet.Config"
+          "/home/friday6661/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -68,7 +68,7 @@
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -82,26 +82,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.112/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj": {
+    "/home/friday6661/Inventory/Inventory.API.Services/Inventory.API.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj",
+        "projectUniqueName": "/home/friday6661/Inventory/Inventory.API.Services/Inventory.API.Services.csproj",
         "projectName": "Inventory.API.Services",
-        "projectPath": "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj",
-        "packagesPath": "/home/friday/.nuget/packages/",
-        "outputPath": "/home/friday/Inventory/Inventory.API.Services/obj/",
+        "projectPath": "/home/friday6661/Inventory/Inventory.API.Services/Inventory.API.Services.csproj",
+        "packagesPath": "/home/friday6661/.nuget/packages/",
+        "outputPath": "/home/friday6661/Inventory/Inventory.API.Services/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/friday/.nuget/NuGet/NuGet.Config"
+          "/home/friday6661/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -113,8 +123,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
-                "projectPath": "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj"
+              "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
+                "projectPath": "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj"
               }
             }
           }
@@ -141,11 +151,11 @@
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.3, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.3, )"
             },
             "System.Security.Claims": {
               "target": "Package",
@@ -163,26 +173,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.112/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/friday/Inventory/Inventory.API/Inventory.API.csproj": {
+    "/home/friday6661/Inventory/Inventory.API/Inventory.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/friday/Inventory/Inventory.API/Inventory.API.csproj",
+        "projectUniqueName": "/home/friday6661/Inventory/Inventory.API/Inventory.API.csproj",
         "projectName": "Inventory.API",
-        "projectPath": "/home/friday/Inventory/Inventory.API/Inventory.API.csproj",
-        "packagesPath": "/home/friday/.nuget/packages/",
-        "outputPath": "/home/friday/Inventory/Inventory.API/obj/",
+        "projectPath": "/home/friday6661/Inventory/Inventory.API/Inventory.API.csproj",
+        "packagesPath": "/home/friday6661/.nuget/packages/",
+        "outputPath": "/home/friday6661/Inventory/Inventory.API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/friday/.nuget/NuGet/NuGet.Config"
+          "/home/friday6661/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -194,11 +214,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
-                "projectPath": "/home/friday/Inventory/Inventory.API.Data/Inventory.API.Data.csproj"
+              "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj": {
+                "projectPath": "/home/friday6661/Inventory/Inventory.API.Data/Inventory.API.Data.csproj"
               },
-              "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj": {
-                "projectPath": "/home/friday/Inventory/Inventory.API.Services/Inventory.API.Services.csproj"
+              "/home/friday6661/Inventory/Inventory.API.Services/Inventory.API.Services.csproj": {
+                "projectPath": "/home/friday6661/Inventory/Inventory.API.Services/Inventory.API.Services.csproj"
               }
             }
           }
@@ -253,7 +273,7 @@
             },
             "Microsoft.OpenApi": {
               "target": "Package",
-              "version": "[1.6.8, )"
+              "version": "[1.6.10, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -261,11 +281,11 @@
             },
             "Serilog.AspNetCore": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0, )"
             },
             "Serilog.Expressions": {
               "target": "Package",
-              "version": "[3.4.1, )"
+              "version": "[4.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -283,6 +303,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.13, 7.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -291,7 +321,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.112/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
         }
       }
     }

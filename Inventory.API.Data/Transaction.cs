@@ -8,12 +8,8 @@ namespace Inventory.API.Data
         public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         
-        [ForeignKey(nameof(ItemId))]
-        public int ItemId { get; set; }
-        public Item Item { get; set; }
-
-        [ForeignKey(nameof(TransactionStatusId))]
-        public int TransactionStatusId { get; set; }
-        public TransactionStatus TransactionStatus { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public int UserId { get; set; }
+        public ApiUser ApiUser { get; set; }
     }
 }

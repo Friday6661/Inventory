@@ -19,8 +19,7 @@ namespace Inventory.API.Services.Repository
 
         public async Task<Transaction> GetDetails(int id)
         {
-            var transaction = await _context.Transactions.Include(t => t.Item)
-                                                            .FirstOrDefaultAsync(t => t.Id == id);
+            var transaction = await _context.Transactions.FirstOrDefaultAsync(t => t.Id == id);
             if (transaction == null)
             {
                 throw new NotFoundException(nameof(GetDetails), id);
@@ -32,5 +31,6 @@ namespace Inventory.API.Services.Repository
         {
             throw new NotImplementedException();
         }
+        
     }
 }

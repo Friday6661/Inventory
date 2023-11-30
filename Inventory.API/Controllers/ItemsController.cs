@@ -115,7 +115,7 @@ namespace Inventory.API.Controllers
 
         // POST: api/Item
         [HttpPost]
-        // [Authorize]
+        [Authorize]
         public async Task<IActionResult> CreateItem(CreateItemDTO createItemDTO)
         {
             var item = _mapper.Map<Item>(createItemDTO);

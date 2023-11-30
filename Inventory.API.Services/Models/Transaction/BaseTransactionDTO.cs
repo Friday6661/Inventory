@@ -8,7 +8,7 @@ namespace Inventory.API.Services.Models.Transaction
     public abstract class BaseTransactionDTO
     {
         public int Quantity { get; set; }
-        public int ItemId { get; set; }
-        public int TransactionStatusId { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public int UserId { get; set; }
     }
 }
